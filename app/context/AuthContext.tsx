@@ -1,32 +1,29 @@
 "use client"
 import { createContext, useState, ReactNode } from "react";
 
-interface Usuario {
-    nome: string;
-}
+interface Usuario { nome: string; }
 
 interface AuthContextProps {
     usuario: Usuario | null; 
     estaLogado: boolean;
-    login: (nome: string) => void;
+    login: (nome: string) => void; 
     logout: () => void;
 }
 
+// criacao do context que vai receber as props da interface AuthContextProps, começa undefined por segurança
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [usuario, setUsuario] = useState<Usuario | null>(null);
 
-    // Se o estado 'usuario' não for null, ele está logado
+    // estaLogado so vira true se for diferente de null
     const estaLogado = usuario !== null;
 
     function login(nome: string) {
-        setUsuario({ nome: nome });
+        nome.trim() ? setUsuario({ nome: nome.trim() }) : alert("Digite um nome!");
     }
 
-    function logout() {
-        setUsuario(null);
-    }
+    const logout = () => setUsuario(null);
 
     return (
         <AuthContext.Provider value={{ usuario, estaLogado, login, logout }}>

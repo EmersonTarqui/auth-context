@@ -29,6 +29,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        {/* AuthProvider envolve os filhos para levar o contexto a todos os nodes(nós/componentes) da árvore */}
         <AuthProvider>
           {children}
         </AuthProvider>
